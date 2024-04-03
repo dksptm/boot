@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- 2-1. tv라는 bean생성 -->
+	<bean id="tv" class="com.yedam.spring.TV"></bean>
+	
+	<!-- 2-2. chef라는 bean생성 -->
+	<!-- xml 방식 -->
+	<bean id="cf" class="com.yedam.spring.xml.Chef" />
+	
+	<!-- 2-3. Restaurant라는 bean을 생성하려는데 chef라는 필드있고 new 필요. -->
+	<!-- 2-3. Restaurant라는 클래스의 필드에 chef 주입. --> 
+	<!-- chef라는 필드에(세터로 찾아서) 클래스를 알아서 매핑해줌 -->
+	<!-- property name : 세터 필드명 -->
+	<!-- ref="chef" 컨테이너에 등록된 bean 이름 -->
+	<!-- 매개변수에 값을 넣을건데 컨테이너에 등록된 애들중에서 하나를 집어넣겠다가 ref 속성.-->
+	<!-- 만약 값이면 value="" -->
+	<!-- xml 방식 + 세터DI-->
+	<bean class="com.yedam.spring.xml.Restaurant">
+		<property name="chef" ref="cf" />
+	</bean>
+	
+	<context:component-scan base-package="com.yedam.spring" />
+
+</beans>
