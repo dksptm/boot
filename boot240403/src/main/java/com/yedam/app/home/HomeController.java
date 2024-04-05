@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,13 +25,15 @@ public class HomeController {
 	// Method는 상관없음(GET, POST).
 	// Content-type : application/x-www-form-urlencoded (무조건!).
 	@RequestMapping(path="comobj", method= {RequestMethod.GET, RequestMethod.POST})
-	@ResponseBody
-	public String commandObject(EmpVO empVO) {
+	public String commandObject(@ModelAttribute("emp") EmpVO empVO) {
 		log.info("path : /comobj");
 		log.info("= employee_id : " + empVO.getEmployeeId());
 		log.info("= last_name : " + empVO.getLastName());
 		log.info(empVO.toString());
-		return "";
+		return "home";
+		// view resolve => classpath:/templates/home.html
+		// "emp/home" => view resolve => classpath:/templates/emp/home.html 
+		// 이렇게 확장성이 좋기때문에 String타입을 사용한다.
 	}
 	
 	@RequestMapping(path="reqparm", method= {RequestMethod.GET, RequestMethod.POST})
