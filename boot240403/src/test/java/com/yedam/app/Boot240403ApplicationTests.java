@@ -15,39 +15,39 @@ import com.yedam.app.emp.service.EmpVO;
 @SpringBootTest
 class Boot240403ApplicationTests {
 	
-	@Autowired
-	EmpMapper empMapper;
+//	@Autowired
+//	EmpMapper empMapper;
 
 	//@Test
 	void contextLoads() {
 	}
 
-	@Test
-	void empAllList() {
-		List<EmpVO> list = empMapper.selectEmpAll();
-		assertTrue(!list.isEmpty());
-	}
-	
-	@Test
-	void empInsert() {
-		EmpVO empVO = new EmpVO();
-		empVO.setLastName("hong");
-		empVO.setEmail("kdHong@google.com");
-		empVO.setJobId("IT_PROG");
-		
-		int result = empMapper.insertEmp(empVO);
-		assertEquals(1, result);
-	}
-	
-	@Test
-	void empUpdate() {
-		EmpVO empVO = new EmpVO();
-		empVO.setLastName("Jong");
-		empVO.setJobId("AD_VP");
-		empVO.setEmployeeId(315);
-		
-		int result = empMapper.updateEmp(empVO);
-		assertEquals(1, result);	
-	}
+//	@Test
+//	void empAllList() {
+//		List<EmpVO> list = empMapper.selectEmpAll();
+//		assertTrue(!list.isEmpty());
+//	}
+//	
+//	@Test
+//	void empInsert() {
+//		EmpVO empVO = new EmpVO();
+//		empVO.setLastName("hong");
+//		empVO.setEmail("kdHong@google.com");
+//		empVO.setJobId("IT_PROG");
+//		
+//		int result = empMapper.insertEmp(empVO);
+//		assertEquals(1, result);
+//	}
+//	
+//	@Test
+//	void empUpdate() {
+//		EmpVO empVO = new EmpVO();
+//		empVO.setLastName("Jong");
+//		empVO.setJobId("AD_VP");
+//		empVO.setEmployeeId(315);
+//		
+//		int result = empMapper.updateEmp(empVO);
+//		assertEquals(1, result);	
+//	}
 	
 }

@@ -7,16 +7,16 @@
 	<!-- 전체조회 -->
 	<select id="selectEmpAll" resultType="EmpVO">
 		SELECT  employee_id
-		      , first_name
-		      , last_name
-		      , email
-		      , phone_number
-		      , hire_date
-		      , job_id
-		      , salary
-		      , commission_pct
-		      , manager_id
-		      , department_id
+		        , first_name
+		        , last_name
+		        , email
+		        , phone_number
+		        , hire_date
+		        , job_id
+		        , salary
+		        , commission_pct
+		        , manager_id
+		        , department_id
 		FROM  employees
 		ORDER BY employee_id
 	</select>
@@ -24,16 +24,16 @@
 	<!-- 단건조회 -->
 	<select id="selectEmp" resultType="EmpVO">
 		SELECT  employee_id
-		      , first_name
-		      , last_name
-		      , email
-		      , phone_number
-		      , hire_date
-		      , job_id
-		      , salary
-		      , commission_pct
-		      , manager_id
-		      , department_id
+		        , first_name
+		        , last_name
+		        , email
+		        , phone_number
+		        , hire_date
+		        , job_id
+		        , salary
+		        , commission_pct
+		        , manager_id
+		        , department_id
 		FROM  employees
 		WHERE employee_id = #{employeeId}
 	</select>

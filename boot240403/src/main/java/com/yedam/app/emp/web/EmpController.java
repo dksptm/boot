@@ -17,6 +17,11 @@ public class EmpController {
 	@Autowired
 	EmpService empService;
 	
+	@GetMapping("menu")
+	public String empMain() {
+		return "emp/menu";
+	}
+	
 	// 전체조회.
 	@GetMapping("empList")
 	public String empList(Model model) { // Model = Request + Response.
@@ -45,7 +50,7 @@ public class EmpController {
 		return "emp/empInsert";
 	}
 	
-	// 등록 - 철 => POST
+	// 등록 - 처리 => POST
 	@PostMapping("empInsert")
 	public String empInsertProcess(EmpVO empVO) {
 		int eId = empService.empInsert(empVO);
@@ -53,7 +58,7 @@ public class EmpController {
 		if (eId > -1) {
 			uri = "redirect:empInfo?employeeId=" + eId;
 		} else {
-			uri = "empList";
+			uri = "empList"; // -> 다시 확인해야함
 		}
 		return uri;
 	}
