@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{common/layouts/default_layout}"
+	  layout:fragment="content">
+<head>
+<meta charset="UTF-8">
+<title>title</title>
+</head>
+<body>
+	<form name="insertForm" th:action="@{/empInsert}" method="post" th:object="${empVO}" class="container mt-3 w-50">
+		<div class="input-group mb-3">
+			<span class="input-group-text w-25">사원번호</span>
+	  		<input type="text" th:field="*{employeeId}" class="form-control" readonly>
+		</div>
+		<div class="input-group mb-3">
+			<span class="input-group-text w-25">이름</span>
+	  		<input type="text" th:field="*{lastName}" class="form-control">
+		</div>
+		<div class="input-group mb-3">
+			<span class="input-group-text w-25">이메일</span>
+	  		<input type="text" th:field="*{email}" class="form-control">
+		</div>
+		<div class="input-group mb-3">
+			<span class="input-group-text w-25">입사일</span>
+	  		<input type="date" th:field="*{hireDate}" class="form-control">
+		</div>
+		<div class="input-group mb-3">
+			<span class="input-group-text w-25">업무</span>
+	  		<input type="text" th:field="*{jobId}" class="form-control">
+		</div>
+		<div class="input-group mb-3">
+			<span class="input-group-text w-25">급여</span>
+	  		<input type="number" th:field="*{salary}"  class="form-control">
+		</div>
+		<div class="input-group mb-3">
+			<button type="submit" class="btn btn-success">사원등록</button>
+		</div>
+	</form>
+	<script>
+		document.querySelector('form[name="insertForm"]').addEventListener('submit', validationCheck);
+		function validationCheck(event) {
+			event.preventDefault(); // 원래 등록된 핸들러 일시적으로 막기.
+			let name = document.getElementById('lastName');
+			if(name.value == '') { // input 비교할땐 공백기준삼아서(null, undefined X)
+				alert('사원이름은 필수로 입력해야합니다.');
+				name.focus();
+				return;
+			} 
+			//else if(){} // else if 안됨. 세 건이 각각 돌아야 함.
+			let email = document.getElementById('email');
+			if(email.value == '') {
+				alert('이메일은 필수로 입력해야합니다.');
+				email.focus();
+				return;
+			}
+			let jobId = document.getElementById('jobId');
+			if(jobId.value == '') { 
+				alert('업무는 필수로 입력해야합니다.');
+				jobId.focus();
+				return;
+			}
+
+			insertForm.submit();
+		}
+	</script>
+</body>
+</html>

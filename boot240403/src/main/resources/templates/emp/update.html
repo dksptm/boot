@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{common/layouts/default_layout}"
+	  layout:fragment="content">
+<head>
+<meta charset="UTF-8">
+<title>title</title>
+</head>
+<body>
+	<form th:action="@{/empUpdate}" method="post" th:object="${empInfo}" class="container mt-3 w-50">
+		<div class="input-group mb-3">
+			<span class="input-group-text w-25">사원번호</span>
+	  		<input type="text" th:field="*{employeeId}" class="form-control" readonly>
+		</div>
+		<div class="input-group mb-3">
+			<span class="input-group-text w-25">이름</span>
+	  		<input type="text" th:field="*{lastName}" class="form-control">
+		</div>
+		<div class="input-group mb-3">
+			<span class="input-group-text w-25">이메일</span>
+	  		<input type="text" th:field="*{email}" class="form-control">
+		</div>
+		<div class="input-group mb-3">
+			<span class="input-group-text w-25">입사일</span>
+	  		<input type="date" th:field="*{hireDate}" class="form-control">
+		</div>
+		<div class="input-group mb-3">
+			<span class="input-group-text w-25">급여</span>
+	  		<input type="number" th:field="*{salary}"  class="form-control">
+		</div>
+		<div>
+			<button type="button" id="updateBtn" class="btn btn-success">사원수정</button>
+		</div>
+	</form>
+	
+	<script>
+		// javascript 이용.
+		document.querySelector('#updateBtn').addEventListener('click', updateAjax);
+		function updateAjax(event) {
+			
+			if(!validationCheck()) return;
+
+			let dataObj = getEmpObj();
+
+			// 자바스크립트의 페치는 쿼리스트링 그냥 안만들어줌 클래스이용(URLSearchParam())
+			// 쿼리스트링으로 넘겨주기도하고 쿼리로 들어온객체도 변환시켜줌
+			fetch('empUpdate', {
+				method : 'post',
+				/*
+				body : JSON.stringify(dataObj),
+				headers : {
+					'Content-type' : 'application/json'
+				}
+				*/
+				body : new URLSearchParams(dataObj)
+			})
+			.then(res => res.json())
+			.then(ret => {
+				console.log(ret);
+			})
+			.catch(err => console.log(err));
+			
+		}
+
+		function validationCheck() {
+			let name = document.getElementById('lastName');
+			if(name.value == '') {
+				alert('사원이름은 필수로 입력해야 합니다.');
+				name.focus();
+				return false;
+			}
+			console.log('이름체크');
+			return true;
+		}
+
+		function getEmpObj() {
+			let formTag = document.querySelector('form');
+
+			let formData = new FormData(formTag);
+
+			let formObj = {}
+			formData.forEach((val, key) => {
+				formObj[key] = val;
+			})
+
+			return formObj;
+		}
+	</script>
+	<script>
+		/**
+		// jQuery 이용.
+		$('#updateBtn').on('click', updateAjaxJq);
+		
+		function updateAjaxJq(event) {
+			// Validation check.
+			if(!validationCheck()) return;
+
+			// 보낼 데이터 정리.
+			let dataObj = getEmpObj();
+			
+			// Ajax. => 기본이 쿼리스트링이라 data를 객체형태만 맞춰주면 된다. 알아서 만들어줌(페치는 불가능)
+			$.ajax('empUpdate', {
+				type : 'post',
+				data : dataObj
+			})
+			.done(result => {
+				//console.log(result);
+				if(result != null) {
+					alert('정상적으로 수정되었습니다.');
+				} else {
+					alert('수정되지 않았습니다.\n확인해주세요.');
+				}
+			})
+			.fail(err => console.error(err));
+
+		};
+
+		function validationCheck() {
+			let name = $('#lastName');
+			if(name.val == '') {
+				alert('사원이름은 필수로 입력해야 합니다.');
+				name.focus();
+				return false;
+			}
+			return true;
+		}
+
+		function getEmpObj() {
+			// form 태그 활용. 
+			let formAry = $('form').serializeArray();
+			// [ {name: 'employeeId', value : '209'}, 
+			//   {name: 'lastName', value : 'Kang' }, ...]
+			// 이렇게 input 태그 하나가 {하나의 객체}
+			// 내가 원하는 형태 => { employeeId : '209', lastName: 'Kang', ... }
+			let formObj = {}
+			formAry.forEach(inputTag => {
+				formObj[inputTag.name] = inputTag.value;
+			})
+
+			return formObj;
+		}
+		**/
+	</script>
+	<script>
+		/**
+		// jQuery 이용. json으로 보내기.
+		$('#updateBtn').on('click', updateAjaxJq);
+		
+		function updateAjaxJq(event) {
+			if(!validationCheck()) return;
+
+			let dataObj = getEmpObj();
+			
+			$.ajax('empUpdate', {
+				type : 'post',
+				contentType : 'application/json',
+				data : JSON.stringify(dataObj)
+			})
+			.done(result => {
+				if(result != null) {
+					alert('정상적으로 수정되었습니다.');
+				} else {
+					alert('수정되지 않았습니다.\n확인해주세요.');
+				}
+			})
+			.fail(err => console.error(err));
+		};
+
+		function validationCheck() {
+			let name = $('#lastName');
+			if(name.val == '') {
+				alert('사원이름은 필수로 입력해야 합니다.');
+				name.focus();
+				return false;
+			}
+			return true;
+		}
+
+		function getEmpObj() {
+			let formAry = $('form').serializeArray();
+			let formObj = {}
+			formAry.forEach(inputTag => {
+				formObj[inputTag.name] = inputTag.value;
+			})
+			return formObj;
+		}
+		**/
+	</script>
+</body>
+</html>

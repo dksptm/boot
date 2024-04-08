@@ -69,4 +69,9 @@ public class EmpServiceImpl implements EmpService {
 		return map;
 	}
 
+	@Override
+	public EmpVO getEmpId() {
+		return empMapper.getEmpId();
+	}
+
 }

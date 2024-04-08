@@ -20,4 +20,7 @@ public interface EmpService {
 	// 삭제.
 	public Map<String, Object> empDelete(EmpVO empVO);
 	
+	// 등록할 사원번호 조회.
+	public EmpVO getEmpId();
+	
 }

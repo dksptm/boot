@@ -43,7 +43,7 @@ public class DeptController {
 	@GetMapping("deptInsert")
 	public String deptInsertForm(Model model) {
 		model.addAttribute("deptVO", new DeptVO());
-		return "dept/deptInsert";
+		return "dept/insert";
 	}
 	
 	// 부서 등록 - 처리.
