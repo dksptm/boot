@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.app.security.mapper.UserMapper">
+
+	<select id="getuserInfo" resultType="UserVO">
+		SELECT login_id
+		       , password
+		       , role_name
+		FROM t_user JOIN t_user_role 
+		            ON (t_user.id = user_id)
+		            JOIN t_role
+		            ON (t_role.id = role_id)
+		WHERE login_id = #{id}	
+	</select>
+
+</mapper>

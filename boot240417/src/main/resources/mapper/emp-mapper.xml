@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.app.emp.mapper.EmpMapper">
+
+	<!-- 전체조회 -->
+	<select id="selectEmpAll" resultType="EmpVO">
+		SELECT  employee_id
+		        , first_name
+		        , last_name
+		        , email
+		        , phone_number
+		        , hire_date
+		        , job_id
+		        , salary
+		        , commission_pct
+		        , manager_id
+		        , department_id
+		FROM  employees
+		ORDER BY employee_id
+	</select>
+	
+	<!-- 단건조회 -->
+	<select id="selectEmp" resultType="EmpVO">
+		SELECT  employee_id
+		        , first_name
+		        , last_name
+		        , email
+		        , phone_number
+		        , hire_date
+		        , job_id
+		        , salary
+		        , commission_pct
+		        , manager_id
+		        , department_id
+		FROM  employees
+		WHERE employee_id = #{employeeId}
+	</select>
+	
+	<!-- 등록 -->
+	<insert id="insertEmp" parameterType="EmpVO">
+		<selectKey keyProperty="employeeId"
+				   resultType="Integer"
+				   order="BEFORE">
+			SELECT NVL(MAX(employee_id), 0) + 1
+			FROM employees
+		</selectKey>
+		INSERT INTO employees
+			    (
+			      	employee_id
+			      	, last_name
+			      	, email
+			      	, hire_date
+			      	<if test="jobId != null and !jobId.equals('')">
+			      	, job_id
+			      	</if>
+			      	<if test="salary > 0">
+			      	, salary
+			      	</if>
+			    )
+			VALUES
+				(
+					#{employeeId}
+					, #{lastName}
+					, #{email}
+					<choose>
+						<when test="hireDate != null">
+						, #{hireDate}
+						</when>
+						<otherwise>
+						, sysdate
+						</otherwise>
+					</choose>
+					<if test="jobId != null and !jobId.equals('')">
+					, #{jobId}
+					</if>
+					<if test="salary > 0">
+					, #{salary}
+					</if>
+				)
+	</insert>
+	
+	<!-- 수정 -->
+	<update id="updateEmp" parameterType="EmpVO">
+		UPDATE employees
+		SET
+			last_name = #{lastName}
+		<if test="email != null and !email.equals('')">
+			, email = #{email}
+		</if>
+		<if test="hireDate != null">
+			, hire_date = #{hireDate}
+		</if>
+		<if test="salary > 0">
+			, salary = #{salary}
+		</if>
+		WHERE employee_id = #{employeeId}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="deleteEmp" parameterType="int">
+		DELETE FROM employees
+		WHERE employee_id = #{eid}
+	</delete>
+	
+	<!-- 등록할 사원번호 조회. -->
+	<select id="getEmpId" resultType="EmpVO">
+		SELECT NVL(MAX(employee_id), 0) + 1 as employee_id
+		FROM employees
+	</select>
+
+</mapper>

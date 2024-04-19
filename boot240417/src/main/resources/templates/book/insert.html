@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{common/layouts/default_layout}">
+<body>
+<th:block layout:fragment="Content">
+
+<form class="container mt-3 w-50" name="insertForm" th:action="@{/bookInsert}" method="post" th:object="${book}">
+  <br><br>
+  <h2 class="text-center">도서 등록</h2>   
+  <br> 
+  <table id="form" class="table table-bordered text-center">
+    <thead class="align-middle">
+      <tr class="table-info">
+        <th>도서번호</th>
+        <td><input type="text" th:field="*{bookNo}" class="form-control-plaintext" readonly></td>
+      </tr>
+    </thead>
+    <tbody class="align-middle">
+      <tr>
+      	<th>도서명</th>
+        <td><input type="text" th:field="*{bookName}" class="form-control-plaintext"></td>
+      </tr>
+      <tr>
+      	<th>도서표지</th>
+        <td><input type="text" th:field="*{bookCoverimg}" class="form-control-plaintext"></td>
+      </tr>
+      <tr>
+      	<th>출판일자</th>
+        <td><input type="date" th:field="*{bookDate}" class="form-control-plaintext"></td>
+      </tr>
+      <tr>
+      	<th>금액</th>
+        <td><input type="text" th:field="*{bookPrice}" class="form-control-plaintext"></td>
+      </tr>
+      <tr>
+      	<th>출판사</th>
+        <td><input type="text" th:field="*{bookPublisher}" class="form-control-plaintext"></td>
+      </tr>
+      <tr>
+      	<th class="align-baseline">도서소개</th>
+        <td><textarea th:field="*{bookInfo}" class="form-control-plaintext" rows="10"></textarea></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="text-end">
+  	<button type="submit" class="btn btn-primary">등록</button>
+  	<button type="reset" class="btn btn-secondary">조회</button>
+  </div>
+</form>
+
+<script>
+  document.querySelector('form[name="insertForm"]')
+          .addEventListener('submit', bookInsert);
+  
+  function bookInsert(event) {
+    event.preventDefault(); 
+    let name = document.getElementById('bookName');
+    if(name.value == '') {
+      alert('도서명이 입력되지 않았습니다.');
+      name.focus();
+      return;
+    }
+    alert('도서등록이 완료되었습니다.');
+    insertForm.submit();
+  }
+</script>
+
+</th:block>
+</body>
+</html>
