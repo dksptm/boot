@@ -81,18 +81,25 @@ public class EmpController {
 		return "emp/update";
 	}
 	
-	// 수정 - 처리 : AJAX => QueryString
+	// 수정 - 처리 방법1: AJAX => QueryString
 	@PostMapping("empUpdate")
 	@ResponseBody
 	public Map<String, Object> empUpdateProcess(EmpVO empVO) {
 		return empService.empUpdate(empVO);
 	}
 	
-	// 수정 - 처리 : AJAX => JSON
+	// 수정 - 처리 방법2: AJAX => JSON
 	//@PostMapping("empUpdate")
 	@ResponseBody
 	public Map<String, Object> empUpdateProcessAjax(@RequestBody EmpVO empVO) {
 		return empService.empUpdate(empVO);
+	}
+	
+	// 삭제 - 처리
+	@GetMapping("empDelete")
+	public String empDelete(EmpVO empVO) {
+		empService.empDelete(empVO);
+		return "redirect:empList";
 	}
 	
 

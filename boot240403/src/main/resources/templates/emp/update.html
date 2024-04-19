@@ -57,7 +57,11 @@
 			})
 			.then(res => res.json())
 			.then(ret => {
-				console.log(ret);
+				if(ret != null){
+					alert('정상적으로 수정되었습니다.');
+				} else {
+					alert('수정되지 않았습니다.\n확인해주세요.');
+				}
 			})
 			.catch(err => console.log(err));
 			
@@ -70,7 +74,6 @@
 				name.focus();
 				return false;
 			}
-			console.log('이름체크');
 			return true;
 		}
 
