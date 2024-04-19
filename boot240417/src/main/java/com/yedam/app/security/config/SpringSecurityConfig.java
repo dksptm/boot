@@ -62,7 +62,7 @@ public class SpringSecurityConfig {
 		// (단 관련된 설정이란 뜻 아님). 빌더방식이라 가능한것.
 //		http.logout();
 		
-		http.csrf().disable(); // cors관련.
+		//http.csrf().disable(); // cors관련.
 		
 		return http.build();
 	}
